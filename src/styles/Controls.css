@@ -1,66 +1,80 @@
 .controls {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  flex-direction: row; /* sejajar */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+}
+
+.controls-left {
+  flex: 0;
+  display: flex;
+  justify-content: center; /* tombol angka di tengah */
+}
+
+.controls-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end; /* tombol aksi di kanan */
 }
 
 .number-buttons {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  margin-bottom: 10px;
 }
 
 .number-btn {
-  width: 50px;
-  height: 50px;
-  border: 2px solid #F75270;
-  background-color: white;
-  color: #DC143C;
+  width: 45px;
+  height: 45px;
+  border: 2px solid #A2AADB;
+  background-color: #fff;
+  color: #898AC4;
   font-size: 1.2rem;
   font-weight: bold;
-  border-radius: 50%;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .number-btn:hover {
-  background-color: #F75270;
-  color: white;
+  background-color: #A2AADB;
+  color: #fff;
 }
 
 .action-buttons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
 
 .action-btn {
   padding: 12px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s;
-  color: white;
+  color: #fff;
 }
 
 .action-btn.hint {
-  background-color: #3498db;
+  background-color: #A2AADB;
 }
 
 .action-btn.check {
-  background-color: #2ecc71;
+  background-color: #898AC4;
 }
 
 .action-btn.solve {
-  background-color: #9b59b6;
+  background-color: #C0C9EE;
+  color: #2d2d2d;
 }
 
 .action-btn.new-game {
-  background-color: #e74c3c;
+  background-color: #898AC4;
 }
 
 .action-btn:hover {
@@ -73,17 +87,17 @@
 }
 
 .difficulty-selector label {
-  color: #DC143C;
+  color: #898AC4;
   font-weight: bold;
   margin-right: 10px;
 }
 
 .difficulty-selector select {
   padding: 8px 15px;
-  border: 2px solid #F75270;
-  border-radius: 5px;
-  background-color: white;
-  color: #DC143C;
+  border: 2px solid #A2AADB;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #898AC4;
   font-weight: bold;
   cursor: pointer;
 }

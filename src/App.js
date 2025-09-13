@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Board from './components/Board';
 import Controls from './components/Controls';
 import DifficultySelector from './components/DifficultySelector';
-import { generateSudoku, solveSudoku, isValid } from './algorithms/sudokuGenerator';
+import { generateSudoku } from './algorithms/sudokuGenerator';
 import './styles/App.css';
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
   const [selectedCell, setSelectedCell] = useState(null);
   const [difficulty, setDifficulty] = useState('medium');
   const [errors, setErrors] = useState([]);
+  const [gameComplete, setGameComplete] = useState(false);
 
   // Generate new puzzle when difficulty changes
   useEffect(() => {
@@ -23,11 +24,12 @@ function App() {
     setSolution(newSolution);
     setSelectedCell(null);
     setErrors([]);
+    setGameComplete(false);
   };
 
   const handleCellSelect = (row, col) => {
-    // Only allow selection of empty cells
-    if (puzzle[row][col] === 0) {
+    const isInitial = solution[row][col] === puzzle[row][col];
+    if (!isInitial) {
       setSelectedCell({ row, col });
     }
   };
@@ -35,16 +37,31 @@ function App() {
   const handleNumberSelect = (number) => {
     if (selectedCell) {
       const { row, col } = selectedCell;
-      const newPuzzle = [...puzzle];
+      const newPuzzle = puzzle.map(r => [...r]); // deep copy
+
       newPuzzle[row][col] = number;
       setPuzzle(newPuzzle);
-      
-      // Check if the move is valid
+
+      // Jika kosongkan cell
+      if (number === 0) {
+        setErrors(errors.filter(error => !(error.row === row && error.col === col)));
+        return;
+      }
+
+      // Validasi error
       if (number !== solution[row][col]) {
         setErrors([...errors, { row, col }]);
       } else {
-        // Remove from errors if it was previously wrong
         setErrors(errors.filter(error => !(error.row === row && error.col === col)));
+      }
+
+      // ✅ Cek apakah semua cell sudah benar
+      const isComplete = newPuzzle.every((r, rIdx) =>
+        r.every((val, cIdx) => val === solution[rIdx][cIdx])
+      );
+
+      if (isComplete) {
+        setGameComplete(true);
       }
     }
   };
@@ -52,17 +69,23 @@ function App() {
   const handleSolve = () => {
     setPuzzle([...solution]);
     setErrors([]);
+    setGameComplete(true);
   };
 
   const handleHint = () => {
     if (selectedCell) {
       const { row, col } = selectedCell;
-      const newPuzzle = [...puzzle];
+      const newPuzzle = puzzle.map(r => [...r]);
       newPuzzle[row][col] = solution[row][col];
       setPuzzle(newPuzzle);
-      
-      // Remove from errors if it was previously wrong
+
       setErrors(errors.filter(error => !(error.row === row && error.col === col)));
+
+      // Cek lagi apakah sudah selesai
+      const isComplete = newPuzzle.every((r, rIdx) =>
+        r.every((val, cIdx) => val === solution[rIdx][cIdx])
+      );
+      if (isComplete) setGameComplete(true);
     }
   };
 
@@ -77,6 +100,23 @@ function App() {
     }
     setErrors(newErrors);
   };
+
+  // ✅ Input lewat keyboard
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!selectedCell) return;
+
+      if (e.key >= "1" && e.key <= "9") {
+        handleNumberSelect(parseInt(e.key));
+      }
+      if (e.key === "Backspace" || e.key === "Delete" || e.key === "0") {
+        handleNumberSelect(0);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedCell, puzzle, errors]);
 
   return (
     <div className="App">
@@ -102,6 +142,19 @@ function App() {
           onCheck={handleCheck}
         />
       </main>
+
+      {/* ✅ Popup cantik */}
+      {gameComplete && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>🎉 Selamat!</h2>
+            <p>Kamu berhasil menyelesaikan Sudoku!</p>
+            <button className="close-btn" onClick={() => setGameComplete(false)}>
+              Tutup
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

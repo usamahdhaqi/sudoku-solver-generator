@@ -5,36 +5,38 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #ddd;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
-  background-color: white;
-  color: #333;
+  background-color: #fff;
+  color: #2d2d2d;
 }
 
 .cell:nth-child(3n) {
-  border-right: 3px solid #DC143C;
+  border-right: 2px solid #C0C9EE;
 }
 
 .cell:not(:last-child) {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #eee;
 }
 
 .cell.initial {
-  color: #DC143C;
+  color: #898AC4;
   font-weight: bold;
 }
 
 .cell.selected {
-  background-color: #F7CAC9;
+  background-color: #C0C9EE;
+  color: #fff;
 }
 
 .cell.error {
   background-color: #FFB6C1;
-  color: #DC143C;
+  color: #fff;
+  font-weight: bold;
 }
 
 .cell:hover:not(.initial) {
-  background-color: #FDEBD0;
+  background-color: #f1f3fa;
 }
