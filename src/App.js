@@ -38,7 +38,6 @@ function App() {
     if (selectedCell) {
       const { row, col } = selectedCell;
       const newPuzzle = puzzle.map(r => [...r]); // deep copy
-
       newPuzzle[row][col] = number;
       setPuzzle(newPuzzle);
 
@@ -48,14 +47,10 @@ function App() {
         return;
       }
 
-      // Validasi error
-      if (number !== solution[row][col]) {
-        setErrors([...errors, { row, col }]);
-      } else {
-        setErrors(errors.filter(error => !(error.row === row && error.col === col)));
-      }
+      // ❌ Jangan tandai error di sini
+      // Cukup update puzzle saja
 
-      // ✅ Cek apakah semua cell sudah benar
+      // ✅ Cek kemenangan (jika semua cell sudah benar)
       const isComplete = newPuzzle.every((r, rIdx) =>
         r.every((val, cIdx) => val === solution[rIdx][cIdx])
       );
