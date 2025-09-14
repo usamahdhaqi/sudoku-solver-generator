@@ -38,7 +38,7 @@ Screenshot](https://dummyimage.com/600x400/c0c9ee/ffffff&text=Sudoku+App+Preview
 
 ``` bash
 git clone https://github.com/usamahdhaqi/sudoku-solver-generator.git
-cd sudoku-solver
+cd sudoku-solver-generator
 ```
 
 ### 2️⃣ Install dependencies
