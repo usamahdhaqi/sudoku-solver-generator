@@ -28,7 +28,7 @@ auto-solve, error checking, and keyboard input.
 ## 🖼️ Preview
 
 ![App
-Screenshot](https://dummyimage.com/600x400/c0c9ee/ffffff&text=Sudoku+App+Preview)
+Screenshot](./public/screenshot-sudoku.PNG)
 
 ------------------------------------------------------------------------
 
